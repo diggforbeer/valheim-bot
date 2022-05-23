@@ -5,6 +5,12 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "da-bot", "da-bot.csproj", "{BE9797AD-6991-4394-8E2C-B4F92FA4DA8F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55C555E9-57D7-4F51-963D-83D56B976E96}"
+	ProjectSection(SolutionItems) = preProject
+		appsettings.json = appsettings.json
+		LogEventType.cs = LogEventType.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

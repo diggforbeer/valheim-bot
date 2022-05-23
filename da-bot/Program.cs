@@ -9,7 +9,10 @@ var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, 
 var config = builder.Build();
 
 Console.WriteLine("Hello, World!");
-DiscordService.PostMessage("Hello - Starting");
+var discordService = new DiscordService(config["discordWebHook"]);
+var steamService = new SteamService(config["steamApiKey"]);
+
+discordService.PostMessage("Hello - Starting");
 
 var allLines = File.ReadAllLines("example-data/valheim-server-stdout---supervisor-eakr4y_6.log");
 foreach (var line in allLines)
@@ -24,14 +27,14 @@ foreach (var line in allLines)
         case LogEventType.Connected:
             Console.WriteLine($"{logEventType} - {line}");
             playerId = line.Split(" ").Last();
-            player = await SteamService.GetPlayerInfo(playerId);
-            DiscordService.PostMessage($"{player.Personaname} has connected");
+            player = await steamService.GetPlayerInfo(playerId);
+            discordService.PostMessage($"{player.Personaname} has connected");
             break;
         case LogEventType.Disconnected:
             Console.WriteLine($"{logEventType} - {line}");
             playerId = line.Split(" ").Last();
-            player = await SteamService.GetPlayerInfo(playerId);
-            DiscordService.PostMessage($"{player.Personaname} has disconnected");
+            player = await steamService.GetPlayerInfo(playerId);
+            discordService.PostMessage($"{player.Personaname} has disconnected");
             break;
 
     }

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "da-bot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

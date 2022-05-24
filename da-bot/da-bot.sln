@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55C555E9-57D7-4F51-963D-83D56B976E96}"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.json = appsettings.json
+		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 		LogEventType.cs = LogEventType.cs
 	EndProjectSection
 EndProject

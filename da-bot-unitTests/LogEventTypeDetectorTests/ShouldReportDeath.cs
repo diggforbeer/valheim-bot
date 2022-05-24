@@ -14,8 +14,6 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
             Result = Command.Detect(testString);
         }
 
-
-
         [TestMethod]
         public void ShouldBeDeath()
         {

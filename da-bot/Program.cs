@@ -69,6 +69,11 @@ using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName
                     player = await steamService.GetPlayerInfo(playerId);
                     discordService.PostMessage(text: $"{player?.Personaname} has disconnected");
                     break;
+                case LogEventType.Death:
+                    Console.WriteLine($"{logEventType} - {line}");
+                    var deathPlayerName = line.Split(":").First().Split(" ").Last();
+                    discordService.PostMessage(text: $"{deathPlayerName} has died");
+                    break;
 
             }
         }

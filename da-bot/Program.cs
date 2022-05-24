@@ -48,7 +48,7 @@ using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName
         reader.BaseStream.Seek(lastMaxOffset, SeekOrigin.Begin);
 
         //read out of the file until the EOF
-        string line = "";
+        string? line = "";
         while ((line = reader.ReadLine()) != null)
         {
             var logEventType = eventDetector.Detect(line);

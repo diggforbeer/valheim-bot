@@ -5,7 +5,13 @@ using da_bot.Steam;
 using da_bot.Steam.Models;
 using Microsoft.Extensions.Configuration;
 
-var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, true);
+
+var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, true)
+            .AddJsonFile($"appsettings.{environmentName}.json", true, true)
+            .AddEnvironmentVariables();
+
 var config = builder.Build();
 
 Console.WriteLine("Hello, World!");

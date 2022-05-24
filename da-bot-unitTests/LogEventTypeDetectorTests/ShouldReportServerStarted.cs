@@ -3,21 +3,21 @@
 namespace da_bot_unitTests.LogEventTypeDetectorTests
 {
     [TestClass]
-    public class ShouldReportLogin : Context
+    public class ShouldReportServerStarted : Context
     {
 
-        private string testString = "05/18/2022 16:35:38: Got connection SteamID 76561197975931951";
+        private string testString = "Game server connected";
 
 
-        public ShouldReportLogin()
+        public ShouldReportServerStarted()
         {
             Result = Command.Detect(testString);
         }
 
         [TestMethod]
-        public void ShouldBeConnected()
+        public void ShouldBeStarted()
         {
-            Result.ShouldEqual(da_bot.LogEventType.Connected);
+            Result.ShouldEqual(da_bot.LogEventType.ServerStarted);
         }
 
         [TestMethod]

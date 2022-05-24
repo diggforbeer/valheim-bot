@@ -9,5 +9,6 @@ namespace da_bot
         Disconnected = 2,
         Killed = 3,
         Death = 4,
+        ServerStarted = 5,
     }
 }

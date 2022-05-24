@@ -74,6 +74,10 @@ using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName
                     var deathPlayerName = line.Split(":").First().Split(" ").Last();
                     discordService.PostMessage(text: $"{deathPlayerName} has died");
                     break;
+                case LogEventType.ServerStarted:
+                    Console.WriteLine($"{logEventType} - {line}");
+                    discordService.PostMessage(text: $"Server has started");
+                    break;
 
             }
         }

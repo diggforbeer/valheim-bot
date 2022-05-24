@@ -11,13 +11,14 @@ var config = builder.Build();
 Console.WriteLine("Hello, World!");
 var discordService = new DiscordService(config["discordWebHook"]);
 var steamService = new SteamService(config["steamApiKey"]);
+var eventDetector = new LogEventTypeDetector();
 
 discordService.PostMessage("Hello - Starting");
 
 var allLines = File.ReadAllLines("example-data/valheim-server-stdout---supervisor-eakr4y_6.log");
 foreach (var line in allLines)
 {
-    var logEventType = LogEventTypeDetector.Detect(line);
+    var logEventType = eventDetector.Detect(line);
 
     var playerId = "";
     var player = new Player();

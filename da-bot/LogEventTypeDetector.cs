@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace da_bot
 {
-    public static class LogEventTypeDetector
+    public class LogEventTypeDetector
     {
-        public static LogEventType Detect(string logText)
+        public LogEventType Detect(string logText)
         {
             var eventType = LogEventType.Unknown;
-
 
             if (logText.Contains("Got connection SteamID"))
             {
@@ -21,9 +20,6 @@ namespace da_bot
             {
                 return LogEventType.Disconnected;
             }
-
-
-
             return eventType;
         }
     }

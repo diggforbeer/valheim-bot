@@ -28,6 +28,7 @@ var eventDetector = new LogEventTypeDetector();
 var directory = new DirectoryInfo(config["logFolder"]);
 
 var latestFile = directory.GetFiles("valheim-server-stdout*.log").OrderByDescending(x => x.LastWriteTime).First();
+Console.WriteLine($"latest log file is {latestFile.FullName}");
 
 using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName,
                      FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
@@ -37,7 +38,7 @@ using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName
 
     while (true)
     {
-        System.Threading.Thread.Sleep(100);
+        Thread.Sleep(100);
 
         //if the file size has not changed, idle
         if (reader.BaseStream.Length == lastMaxOffset)
@@ -71,7 +72,7 @@ using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName
 
             }
         }
-            
+
 
         //update the last max offset
         lastMaxOffset = reader.BaseStream.Position;

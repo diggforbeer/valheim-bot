@@ -28,13 +28,13 @@ foreach (var line in allLines)
             Console.WriteLine($"{logEventType} - {line}");
             playerId = line.Split(" ").Last();
             player = await steamService.GetPlayerInfo(playerId);
-            discordService.PostMessage($"{player.Personaname} has connected");
+            discordService.PostMessage(text: $"{player?.Personaname} has connected");
             break;
         case LogEventType.Disconnected:
             Console.WriteLine($"{logEventType} - {line}");
             playerId = line.Split(" ").Last();
             player = await steamService.GetPlayerInfo(playerId);
-            discordService.PostMessage($"{player.Personaname} has disconnected");
+            discordService.PostMessage(text: $"{player?.Personaname} has disconnected");
             break;
 
     }

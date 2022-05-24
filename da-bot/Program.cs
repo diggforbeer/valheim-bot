@@ -25,42 +25,58 @@ var discordService = new DiscordService(config["discordWebHook"]);
 var steamService = new SteamService(config["steamApiKey"]);
 var eventDetector = new LogEventTypeDetector();
 
-discordService.PostMessage("Hello - Starting");
+var directory = new DirectoryInfo(config["logFolder"]);
 
-var allLines = File.ReadAllLines("example-data/valheim-server-stdout---supervisor-eakr4y_6.log");
-foreach (var line in allLines)
+var latestFile = directory.GetFiles("valheim-server-stdout*.log").OrderByDescending(x => x.LastWriteTime).First();
+
+using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName,
+                     FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
 {
-    var logEventType = eventDetector.Detect(line);
+    //start at the end of the file
+    long lastMaxOffset = reader.BaseStream.Length;
 
-    var playerId = "";
-    var player = new Player();
-
-    switch (logEventType)
+    while (true)
     {
-        case LogEventType.Connected:
-            Console.WriteLine($"{logEventType} - {line}");
-            playerId = line.Split(" ").Last();
-            player = await steamService.GetPlayerInfo(playerId);
-            discordService.PostMessage(text: $"{player?.Personaname} has connected");
-            break;
-        case LogEventType.Disconnected:
-            Console.WriteLine($"{logEventType} - {line}");
-            playerId = line.Split(" ").Last();
-            player = await steamService.GetPlayerInfo(playerId);
-            discordService.PostMessage(text: $"{player?.Personaname} has disconnected");
-            break;
+        System.Threading.Thread.Sleep(100);
 
+        //if the file size has not changed, idle
+        if (reader.BaseStream.Length == lastMaxOffset)
+            continue;
+
+        //seek to the last max offset
+        reader.BaseStream.Seek(lastMaxOffset, SeekOrigin.Begin);
+
+        //read out of the file until the EOF
+        string line = "";
+        while ((line = reader.ReadLine()) != null)
+        {
+            var logEventType = eventDetector.Detect(line);
+            var playerId = "";
+            var player = new Player();
+
+            switch (logEventType)
+            {
+                case LogEventType.Connected:
+                    Console.WriteLine($"{logEventType} - {line}");
+                    playerId = line.Split(" ").Last();
+                    player = await steamService.GetPlayerInfo(playerId);
+                    discordService.PostMessage(text: $"{player?.Personaname} has connected");
+                    break;
+                case LogEventType.Disconnected:
+                    Console.WriteLine($"{logEventType} - {line}");
+                    playerId = line.Split(" ").Last();
+                    player = await steamService.GetPlayerInfo(playerId);
+                    discordService.PostMessage(text: $"{player?.Personaname} has disconnected");
+                    break;
+
+            }
+        }
+            
+
+        //update the last max offset
+        lastMaxOffset = reader.BaseStream.Position;
     }
-
 }
-
-
-
-
-
 
 Console.WriteLine("Press any key to exit");
 Console.ReadLine();
-
-
-

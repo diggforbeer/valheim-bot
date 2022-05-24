@@ -3,13 +3,13 @@
 namespace da_bot_unitTests.LogEventTypeDetectorTests
 {
     [TestClass]
-    public class ShouldReportLogin : Context
+    public class ShouldReportDeath : Context
     {
 
-        private string testString = "05/18/2022 16:35:38: Got connection SteamID 76561197975931951";
+        private string testString = "Got character ZDOID from Diggforbeer : 0:0";
 
 
-        public ShouldReportLogin()
+        public ShouldReportDeath()
         {
             Result = Command.Detect(testString);
         }
@@ -17,9 +17,9 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
 
 
         [TestMethod]
-        public void ShouldBeConnected()
+        public void ShouldBeDeath()
         {
-            Result.ShouldEqual(da_bot.LogEventType.Connected);
+            Result.ShouldEqual(da_bot.LogEventType.Death);
         }
 
         [TestMethod]

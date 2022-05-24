@@ -12,6 +12,7 @@ namespace da_bot
         {
             new EventTypeMapping(){LogEventType = LogEventType.Connected, LogMessage ="Got connection SteamID"},
             new EventTypeMapping(){LogEventType = LogEventType.Disconnected, LogMessage ="Closing socket"},
+            new EventTypeMapping(){LogEventType = LogEventType.Death, LogMessage = " : 0:0"} //Got character ZDOID from Diggforbeer : 0:0
         };
 
         public LogEventType Detect(string logText)

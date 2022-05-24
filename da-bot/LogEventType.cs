@@ -8,6 +8,6 @@ namespace da_bot
         Connected = 1,
         Disconnected = 2,
         Killed = 3,
-
+        Death = 4,
     }
 }

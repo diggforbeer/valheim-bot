@@ -4,6 +4,8 @@ using da_bot.Discord;
 using da_bot.Steam;
 using da_bot.Steam.Models;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections;
 
 
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -13,6 +15,10 @@ var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, 
             .AddEnvironmentVariables();
 
 var config = builder.Build();
+
+Console.WriteLine("GetEnvironmentVariables: ");
+foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
+    Console.WriteLine("  {0} = {1}", de.Key, de.Value);
 
 Console.WriteLine("Hello, World!");
 var discordService = new DiscordService(config["discordWebHook"]);

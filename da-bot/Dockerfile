@@ -15,6 +15,8 @@ FROM build AS publish
 RUN dotnet publish "da-bot.csproj" -c Release -o /app/publish
 
 FROM base AS final
+ENV discordWebHook=123
+ENV LOL="1"
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "da-bot.dll"]

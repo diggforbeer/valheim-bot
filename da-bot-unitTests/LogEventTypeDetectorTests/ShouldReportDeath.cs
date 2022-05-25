@@ -1,4 +1,4 @@
-﻿using Should;
+﻿using FluentAssertions;
 
 namespace da_bot_unitTests.LogEventTypeDetectorTests
 {
@@ -17,13 +17,13 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
         [TestMethod]
         public void ShouldBeDeath()
         {
-            Result.ShouldEqual(da_bot.LogEventType.Death);
+            Result.Should().Be(da_bot.LogEventType.Death);
         }
 
         [TestMethod]
         public void ShouldNotBeUnknown()
         {
-            Result.ShouldNotEqual(da_bot.LogEventType.Unknown);
+            Result.Should().NotBe(da_bot.LogEventType.Unknown);
         }
     }
 }

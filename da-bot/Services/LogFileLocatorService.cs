@@ -42,9 +42,9 @@ namespace da_bot.Services
                     while ((line = reader.ReadLine()) != null)
                     {
                         var logEventType = _logEventTypeDetector.Detect(line);
-                        var playerId = "";
                         var player = new Player();
 
+                        string? playerId;
                         switch (logEventType)
                         {
                             case LogEventType.Connected:

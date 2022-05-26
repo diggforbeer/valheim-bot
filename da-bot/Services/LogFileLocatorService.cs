@@ -23,6 +23,8 @@ namespace da_bot.Services
             using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName,
                      FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
+                if (reader == null)
+                    return;
                 //start at the end of the file
                 long lastMaxOffset = reader.BaseStream.Length;
 
@@ -38,7 +40,7 @@ namespace da_bot.Services
                     reader.BaseStream.Seek(lastMaxOffset, SeekOrigin.Begin);
 
                     //read out of the file until the EOF
-                    string line = "";
+                    string? line = "";
                     while ((line = reader.ReadLine()) != null)
                     {
                         var logEventType = _logEventTypeDetector.Detect(line);

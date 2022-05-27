@@ -61,7 +61,7 @@ namespace da_bot.Services
                                 break;
                             case LogEventType.Death:
                                 Console.WriteLine($"{logEventType} - {line}");
-                                var deathPlayerName = line.Split(":").First().Split(" ").Last();
+                                var deathPlayerName = line.Split(":").First().Split(" ")[4];
                                 _discordService.PostMessage(text: $"{deathPlayerName} has died");
                                 break;
                             case LogEventType.ServerStarted:

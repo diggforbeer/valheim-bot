@@ -3,7 +3,12 @@ using Newtonsoft.Json;
 
 namespace da_bot.Steam
 {
-    public class SteamService
+    public interface ISteamService
+    {
+        Task<Player?> GetPlayerInfo(string playerId);
+    }
+
+    public class SteamService : ISteamService
     {
         private readonly string _apiKey;
         private static List<Player> _cachedPlayers = new List<Player>();

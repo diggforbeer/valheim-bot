@@ -8,7 +8,6 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
 
         private string testString = "Game server connected";
 
-
         public ShouldReportServerStarted()
         {
             Result = Command.Detect(testString);
@@ -17,13 +16,13 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
         [TestMethod]
         public void ShouldBeStarted()
         {
-            Result.Should().Be(da_bot.LogEventType.ServerStarted);
+            Result?.LogEventType.Should().Be(da_bot.LogEventType.ServerStarted);
         }
 
         [TestMethod]
         public void ShouldNotBeUnknown()
         {
-            Result.Should().NotBe(da_bot.LogEventType.Unknown);
+            Result?.LogEventType.Should().NotBe(da_bot.LogEventType.Unknown);
         }
     }
 }

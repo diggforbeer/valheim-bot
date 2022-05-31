@@ -54,5 +54,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           # build on feature branches, push only on main branch
-          push:
+          push: true
          

@@ -13,7 +13,7 @@ namespace da_bot.Events
 
         public async override void Handle(string log)
         {
-            var deathPlayerName = log.Split(":").First().Split(" ").Last();
+            var deathPlayerName = line.Split(":").First().Split(" ")[4];
             await _discordService.PostMessage(text: $"{deathPlayerName} has died");
         }
     }

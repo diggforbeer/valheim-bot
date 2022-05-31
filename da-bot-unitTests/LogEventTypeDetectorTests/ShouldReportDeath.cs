@@ -25,5 +25,12 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
         {
             Result?.LogEventType.Should().NotBe(da_bot.LogEventType.Unknown);
         }
+
+        [TestMethod]
+        public void ShouldExtractName()
+        {
+            var deathPlayerName = testString.Split(":").First().Split(" ")[4];
+            deathPlayerName.Should().Be("Diggforbeer");
+        }
     }
 }

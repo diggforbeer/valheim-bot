@@ -30,17 +30,27 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
      
+      - name: Generate Docker metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: |
+            docker.io/diggforbeer/valheim-bot
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          flavor: |
+            latest=true
+            
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./da-bot
-          #file: ./Dockerfile
-          #builder: ${{ steps.buildx.outputs.name }}
           # Note: tags has to be all lower-case
-          tags: |
-            diggforbeer/valheim-bot:latest 
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/valheim-bot:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/valheim-bot:buildcache,mode=max
+         

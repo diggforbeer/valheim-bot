@@ -4,7 +4,7 @@ on:
   # run it on push to the default repository branch
   push:
     branches: [main]
-    tags: v*
+    tags: 1.*
   # run it during pull request
   pull_request:
  

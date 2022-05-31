@@ -38,6 +38,7 @@ jobs:
           # Note: tags has to be all lower-case
           tags: |
             diggforbeer/valheim-bot:latest 
+            diggforbeer/valheim-bot:${{github.event.number}}
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
 

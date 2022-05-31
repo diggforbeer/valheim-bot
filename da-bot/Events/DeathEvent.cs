@@ -3,7 +3,7 @@ using da_bot.Steam;
 
 namespace da_bot.Events
 {
-    internal class DeathEvent : BaseEvent
+    public class DeathEvent : BaseEvent
     {
         public DeathEvent(IDiscordService discordService, ISteamService steamService) : base(discordService, steamService)
         {

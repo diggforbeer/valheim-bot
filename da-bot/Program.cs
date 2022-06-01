@@ -35,7 +35,7 @@ if (valheimService == null)
 valheimService.Start(latestFile);
 
 
-Console.WriteLine("Press any key to exit");
+Console.WriteLine($"Exiting - was watching file {latestFile.FullName}");
 Console.ReadLine();
 
 

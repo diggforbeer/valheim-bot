@@ -25,13 +25,14 @@ namespace da_bot.Services
         {
             using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName,
                      FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
-            {
+             {
                 //start at the end of the file
                 long lastMaxOffset = reader.BaseStream.Length;
 
                 while (true)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
+                    Console.WriteLine(".");
 
                     //if the file size has not changed, idle
                     if (reader.BaseStream.Length == lastMaxOffset)

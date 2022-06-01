@@ -32,7 +32,7 @@ namespace da_bot.Services
                 while (true)
                 {
                     Thread.Sleep(1000);
-                    Console.WriteLine(".");
+                    Console.Write(".");
 
                     //if the file size has not changed, idle
                     if (reader.BaseStream.Length == lastMaxOffset)

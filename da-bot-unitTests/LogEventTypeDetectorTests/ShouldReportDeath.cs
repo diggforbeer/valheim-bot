@@ -17,13 +17,13 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
         [TestMethod]
         public void ShouldBeDeath()
         {
-            Result.Should().Be(da_bot.LogEventType.Death);
+            Result?.LogEventType.Should().Be(da_bot.LogEventType.Death);
         }
 
         [TestMethod]
         public void ShouldNotBeUnknown()
         {
-            Result.Should().NotBe(da_bot.LogEventType.Unknown);
+            Result?.LogEventType.Should().NotBe(da_bot.LogEventType.Unknown);
         }
 
         [TestMethod]

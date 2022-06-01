@@ -17,13 +17,13 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
         [TestMethod]
         public void ShouldBeConnected()
         {
-            Result.Should().Be(da_bot.LogEventType.Connected);
+            Result?.LogEventType.Should().Be(da_bot.LogEventType.Connected);
         }
 
         [TestMethod]
         public void ShouldNotBeUnknown()
         {
-            Result.Should().NotBe(da_bot.LogEventType.Unknown);
+            Result?.LogEventType.Should().NotBe(da_bot.LogEventType.Unknown);
         }
     }
 }

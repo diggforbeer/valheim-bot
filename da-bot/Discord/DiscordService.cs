@@ -3,7 +3,13 @@
 
 namespace da_bot.Discord
 {
-    internal class DiscordService
+    public interface IDiscordService
+    {
+        Task PostMessage(string text);
+    }
+
+
+    internal class DiscordService : IDiscordService
     {
         public readonly DiscordWebhookClient client;
 
@@ -12,7 +18,7 @@ namespace da_bot.Discord
             client = new DiscordWebhookClient(webhookUrl);
         }
 
-        public async void PostMessage(string text)
+        public async Task PostMessage(string text)
         {
             // Create your DiscordMessage with all parameters of your message.
             var message = new DiscordMessage($"{text}",

@@ -5,20 +5,23 @@ using Microsoft.Extensions.Configuration;
 
 namespace da_bot.Services
 {
-    public class ValheimEventDetectorService
+
+    public interface IValheimEventDetectorService
     {
-        private DiscordService _discordService;
-        private SteamService _steamService;
+        void Start(FileInfo latestFile);
+    }
+
+
+    public class ValheimEventDetectorService: IValheimEventDetectorService
+    {
         private LogEventTypeDetector _logEventTypeDetector;
 
-        public ValheimEventDetectorService(IConfigurationRoot config)
+        public ValheimEventDetectorService(IDiscordService discordService, ISteamService steamService)
         {
-            _discordService = new DiscordService(config["discordWebHook"]);
-            _steamService = new SteamService(config["steamApiKey"]);
-            _logEventTypeDetector = new LogEventTypeDetector();
+            _logEventTypeDetector = new LogEventTypeDetector(discordService, steamService);
         }
 
-        public async void Start(FileInfo latestFile)
+        public void Start(FileInfo latestFile)
         {
             using (StreamReader reader = new StreamReader(new FileStream(latestFile.FullName,
                      FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
@@ -41,35 +44,13 @@ namespace da_bot.Services
                     string? line = "";
                     while ((line = reader.ReadLine()) != null)
                     {
-                        var logEventType = _logEventTypeDetector.Detect(line);
-                        var player = new Player();
+                        var logEventTypeMapping = _logEventTypeDetector.Detect(line);
 
-                        string? playerId;
-                        switch (logEventType)
-                        {
-                            case LogEventType.Connected:
-                                Console.WriteLine($"{logEventType} - {line}");
-                                playerId = line.Split(" ").Last();
-                                player = await _steamService.GetPlayerInfo(playerId);
-                                _discordService.PostMessage(text: $"{player?.Personaname} has connected");
-                                break;
-                            case LogEventType.Disconnected:
-                                Console.WriteLine($"{logEventType} - {line}");
-                                playerId = line.Split(" ").Last();
-                                player = await _steamService.GetPlayerInfo(playerId);
-                                _discordService.PostMessage(text: $"{player?.Personaname} has disconnected");
-                                break;
-                            case LogEventType.Death:
-                                Console.WriteLine($"{logEventType} - {line}");
-                                var deathPlayerName = line.Split(":").First().Split(" ")[4];
-                                _discordService.PostMessage(text: $"{deathPlayerName} has died");
-                                break;
-                            case LogEventType.ServerStarted:
-                                Console.WriteLine($"{logEventType} - {line}");
-                                _discordService.PostMessage(text: $"Server has started");
-                                break;
+                        if (logEventTypeMapping == null)
+                            continue;
 
-                        }
+                        Console.WriteLine($"{logEventTypeMapping.LogEventType} - {line}");
+                        logEventTypeMapping.EventClass?.Handle(line);
                     }
 
                     //update the last max offset

@@ -1,4 +1,7 @@
 using da_bot;
+using da_bot.Discord;
+using da_bot.Steam;
+using Moq;
 
 namespace da_bot_unitTests.LogEventTypeDetectorTests
 {
@@ -6,11 +9,15 @@ namespace da_bot_unitTests.LogEventTypeDetectorTests
     public class Context
     {
         public LogEventTypeDetector Command;
-        public LogEventType Result;
-        
+        public EventTypeMapping? Result;
+
         public Context()
         {
-            Command = new LogEventTypeDetector();
+
+            var discordService = new Mock<IDiscordService>();
+            var steamService = new Mock<ISteamService>();
+
+            Command = new LogEventTypeDetector(discordService.Object, steamService.Object);
         }
     }
 }
